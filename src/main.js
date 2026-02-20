@@ -37,7 +37,7 @@ function calculatePizza() {
         <p>Добавки: ${info.toppings.length ? info.toppings.join(', ') : 'нет'}</p>
         <p>--------------------------------</p>
         <p>ИТОГО:</p>
-        <p>Цена: ${info.price}  руб.</p>
+        <p>Цена: ${info.price} руб.</p>
         <p>Калорийность: ${info.calories} ккал</p>
     `;
 }
