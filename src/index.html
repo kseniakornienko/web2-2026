@@ -3,57 +3,93 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Пиццерия</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Пиццерия - Конструктор пиццы</title>
+    <link rel="stylesheet" href="assets/styles/style.css">
 </head>
 <body>
     <div class="container">
         <h1>Конструктор пиццы</h1>
-        
-        <div class="card">
+        <div class="pizza-selector">
             <h2>Выберите пиццу:</h2>
-            <select id="pizzaType">
-                <option value="margherita">Маргарита (500 руб., 300 ккал)</option>
-                <option value="pepperoni">Пепперони (800 руб., 400 ккал)</option>
-                <option value="bavarian">Баварская (700 руб., 450 ккал)</option>
-            </select>
+            <div class="pizza-buttons">
+                <button class="pizza-btn" data-pizza="margherita">
+                    <img src="assets/img/margherita-pizza.webp" alt="Маргарита" class="pizza-img">
+                    <span class="pizza-name">Маргарита</span>
+                    <small>500 руб. | 300 ккал</small>
+                </button>
+                <button class="pizza-btn" data-pizza="pepperoni">
+                    <img src="assets/img/pepperoni-pizza.webp" alt="Пепперони" class="pizza-img">
+                    <span class="pizza-name">Пепперони</span>
+                    <small>800 руб. | 400 ккал</small>
+                </button>
+                <button class="pizza-btn" data-pizza="bavarian">
+                    <img src="assets/img/bavarskaya.png" alt="Баварская" class="pizza-img">
+                    <span class="pizza-name">Баварская</span>
+                    <small>700 руб. | 450 ккал</small>
+                </button>
+            </div>
         </div>
 
-        <div class="card">
-            <h2>Выберите размер (обязательно):</h2>
-            <label>
-                <input type="radio" name="size" value="LARGE" checked> 
-                Большая (+200 руб., +200 ккал)
-            </label><br>
-            <label>
-                <input type="radio" name="size" value="SMALL"> 
-                Маленькая (+100 руб., +100 ккал)
-            </label>
+        <div class="size-selector">
+            <h2>Выберите размер:</h2>
+            <div class="size-buttons">
+                <button class="size-btn" data-size="SMALL">
+                    <span class="size-name">Маленькая</span>
+                    <small>+100 руб. | +100 ккал</small>
+                </button>
+                <button class="size-btn active" data-size="LARGE">
+                    <span class="size-name">Большая</span>
+                    <small>+200 руб. | +200 ккал</small>
+                </button>
+            </div>
         </div>
 
-        <div class="card">
+        <div class="toppings-selector">
             <h2>Добавки:</h2>
-            <label>
-                <input type="checkbox" id="mozzarella" value="MOZZARELLA"> 
-                Сливочная моцарелла (+50 руб., +20 ккал)
-            </label><br>
-            <label>
-                <input type="checkbox" id="cheeseBord" value="CHEESE_BORD"> 
-                Сырный борт (+150 руб. для мал / +300 руб. для бол, +50 ккал)
-            </label><br>
-            <label>
-                <input type="checkbox" id="cheddar" value="CHEDDAR_PARMEZAN"> 
-                Чедер и пармезан (+150 руб. для мал / +300 руб. для бол, +50 ккал)
-            </label>
+            <div class="toppings-list">
+                <label class="topping-item">
+                    <input type="checkbox" data-topping="MOZZARELLA">
+                    <img src="assets/img/mozzarella.webp" alt="Моцарелла" class="topping-img">
+                    <div class="topping-info">
+                        <span class="topping-name">Сливочная моцарелла</span>
+                        <span class="topping-price">+50 руб. | +20 ккал</span>
+                    </div>
+                </label>
+                <label class="topping-item">
+                    <input type="checkbox" data-topping="CHEESE_BORD">
+                    <img src="assets/img/syrnyj-bortik.png" alt="Сырный бортик" class="topping-img">
+                    <div class="topping-info">
+                        <span class="topping-name">Сырный борт</span>
+                        <span class="topping-price">+150 руб. (М) / +300 руб. (Б) | +50 ккал</span>
+                    </div>
+                </label>
+                <label class="topping-item">
+                    <input type="checkbox" data-topping="CHEDDAR_PARMEZAN">
+                    <img src="assets/img/cheese.png" alt="Чедер и пармезан" class="topping-img">
+                    <div class="topping-info">
+                        <span class="topping-name">Чеддер и пармезан</span>
+                        <span class="topping-price">+150 руб. (М) / +300 руб. (Б) | +50 ккал</span>
+                    </div>
+                </label>
+            </div>
         </div>
 
-        <button onclick="calculatePizza()">Рассчитать стоимость</button>
+        <button id="addToCartBtn" class="cart-btn">
+            Добавить в корзину за <span id="totalPrice">559</span> руб. (<span id="totalCalories">900</span> ккал)
+        </button>
 
-        <div id="result" class="result"></div>
+        <div id="orderSummary" class="order-summary">
+            <h3>Ваш заказ:</h3>
+            <div id="orderList"></div>
+            <div class="order-total">
+                <strong>Итого: <span id="orderTotalPrice">0</span> руб. | <span id="orderTotalCalories">0</span> ккал</strong>
+            </div>
+        </div>
     </div>
 
     <script src="pizza.js"></script>
     <script src="pizza-types.js"></script>
+    <script src="order.js"></script>
     <script src="main.js"></script>
 </body>
 </html>
