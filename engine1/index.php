@@ -19,7 +19,7 @@ switch ($page) {
         break;
 
     case 'about':
-        $params['title'] = 'about';
+        $params['title'] = 'О нас';
         $params['phone'] = 444333;
         break;
 
@@ -32,7 +32,6 @@ switch ($page) {
         die();
 }
 
-//echo render($page, $params);
 
 
 function getCatalog() {
@@ -59,19 +58,61 @@ function getMenu() {
     return [
         [
             'title' => 'Главная',
-            'link' => '/3'
+            'link' => '?page=index'
         ],
         [
             'title' => 'Каталог',
-            'link' => '/3/?page=catalog'
+            'link' => '?page=catalog'
         ],
         [
             'title' => 'О нас',
-            'link' => '/3/?page=about'
+            'link' => '?page=about'
         ],
         [
-            'title' => 'Задание 3',
-            'link' => '/3/?page=zadanie'
+            'title' => 'Услуги',
+            'link' => '#',
+            'children' => [
+                [
+                    'title' => 'Доставка',
+                    'link' => '#delivery'
+                ],
+                [
+                    'title' => 'Оплата',
+                    'link' => '#payment'
+                ],
+                [
+                    'title' => 'Возврат',
+                    'link' => '#return'
+                ],
+            ]
+        ],
+        [
+            'title' => 'Контакты',
+            'link' => '#',
+            'children' => [
+                [
+                    'title' => 'Email',
+                    'link' => 'mailto:info@example.com'
+                ],
+                [
+                    'title' => 'Телефон',
+                    'link' => 'tel:+7-495-123-45-67'
+                ],
+                [
+                    'title' => 'Соцсети',
+                    'link' => '#',
+                    'children' => [
+                        [
+                            'title' => 'ВКонтакте',
+                            'link' => '#vk'
+                        ],
+                        [
+                            'title' => 'Telegram',
+                            'link' => '#tg'
+                        ],
+                    ]
+                ],
+            ]
         ],
     ];
 }
@@ -80,35 +121,16 @@ function getMenu() {
 function render($page, $params = []) {
     return renderTemplate(LAYOUTS_DIR . 'main', [
         'title' => $params['title'],
-        'menu' => renderTemplate('menu', ['menus'=> getMenu()] ),
+        'menu' => renderTemplate('menu', ['menus' => getMenu()]),
         'content' => renderTemplate($page, $params)
     ]);
 }
 
-//$page = 'index';
-//
-//$params = [
-//    'test' => 'test',
-//    'title' => 'Главная',
-//    'phone' => '+7 495 12-23-12'
-//];
-
 function renderTemplate($page, $params = []) {
-
-    /*    foreach ($params as $key => $value) {
-            $$key = $value;
-        }*/
     extract($params);
-
     ob_start();
     include TEMPLATES_DIR . $page . ".php";
     return ob_get_clean();
 }
 
-//echo renderTemplate('index', $params);
-
-echo renderTemplate(LAYOUTS_DIR . 'main', [
-    'title' => $params['title'],
-    'menu' => renderTemplate('menu'),
-    'content' => renderTemplate($page, $params)
-]);
+echo render($page, $params);
