@@ -112,6 +112,7 @@ $task4Examples = [
     "mathOperation(100, 5, 'divide') = " . mathOperation(100, 5, "divide")
 ];
 
+// Задача 5
 $year1 = date("Y");
 $year2 = strval(strtotime("now") - strtotime("1970-01-01")) > 0 ? date("Y") : null;
 $year3 = getdate()["year"];
