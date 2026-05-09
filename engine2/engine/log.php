@@ -81,11 +81,14 @@ function logPageRequest() {
 
     // Простая запись в файл
     $result = file_put_contents($log_file, $log_entry . "\n", FILE_APPEND | LOCK_EX);
+    if ($result === false) {
+        return false;
+    }
 
     // Проверить количество строк в файле
     rotateLogFile($log_file);
 
-    return $result !== false;
+    return true;
 }
 
 // Ротация логов - переименование после каждых 10 записей
@@ -93,39 +96,38 @@ function rotateLogFile($log_file) {
     if (!file_exists($log_file)) {
         return;
     }
-    
-    $lines = file($log_file, FILE_SKIP_EMPTY_LINES);
+
+    $lines = file($log_file, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
     $line_count = count($lines);
-    
-    // Если достигли 10 записей, переименовать файл
-    if ($line_count >= 10) {
-        // Найти следующий номер для архива
-        $log_dir = dirname($log_file);
-        $next_number = 0;
-        
-        // Найти максимальный номер архива
-        $files = scandir($log_dir);
-        foreach ($files as $file) {
-            if (preg_match('/^log(\d+)\.txt$/', $file, $matches)) {
-                $number = (int)$matches[1];
-                if ($number >= $next_number) {
-                    $next_number = $number + 1;
-                }
+
+    if ($line_count < 10) {
+        return;
+    }
+
+    // Найти следующий номер для архива
+    $log_dir = dirname($log_file);
+    $next_number = 0;
+    $files = scandir($log_dir);
+    foreach ($files as $file) {
+        if (preg_match('/^log(\d+)\.txt$/', $file, $matches)) {
+            $number = (int)$matches[1];
+            if ($number >= $next_number) {
+                $next_number = $number + 1;
             }
         }
-        
-        // Переименовать текущий файл
-        $archive_file = $log_dir . "/log" . $next_number . ".txt";
-        rename($log_file, $archive_file);
-        
-        // Создать новый пустой log.txt
-        touch($log_file);
-        chmod($log_file, 0644);
     }
-}
-        
-        // Создать новый пустой log.txt
-        touch($log_file);
-        chmod($log_file, 0644);
+
+    $archive_file = $log_dir . "/log" . $next_number . ".txt";
+    $archive_lines = array_slice($lines, 0, 10);
+    file_put_contents($archive_file, implode("\n", $archive_lines) . "\n");
+
+    $remaining_lines = array_slice($lines, 10);
+    if (!empty($remaining_lines)) {
+        file_put_contents($log_file, implode("\n", $remaining_lines) . "\n", LOCK_EX);
+    } else {
+        file_put_contents($log_file, "", LOCK_EX);
     }
+
+    chmod($archive_file, 0644);
+    chmod($log_file, 0644);
 }

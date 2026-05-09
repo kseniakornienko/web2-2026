@@ -1,0 +1,10 @@
+09.05.2026 12:24:00 - GET /?page=index - IP: 127.0.0.1
+09.05.2026 12:25:15 - GET /?page=gallery - IP: 127.0.0.1
+09.05.2026 12:26:30 - GET /?page=catalog - IP: 127.0.0.1
+09.05.2026 12:27:45 - POST /?page=gallery - IP: 127.0.0.1
+09.05.2026 12:29:00 - GET /?page=about - IP: 127.0.0.1
+09.05.2026 12:30:15 - GET /?page=bux - IP: 127.0.0.1
+09.05.2026 12:31:30 - GET /?page=index - IP: 127.0.0.1
+09.05.2026 12:32:45 - GET /?page=gallery - IP: 127.0.0.1
+09.05.2026 12:34:00 - GET /?page=catalog - IP: 127.0.0.1
+09.05.2026 12:35:15 - POST /?page=gallery - IP: 127.0.0.1
