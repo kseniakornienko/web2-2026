@@ -6,29 +6,6 @@ $currentYear = date("Y");
 $a = 12;
 $b = -5;
 
-function getFormattedTime() {
-    $hours = date("H");
-    $minutes = date("i");
-    
-    if ($hours % 10 == 1 && $hours % 100 != 11) {
-        $hoursText = "час";
-    } elseif (($hours % 10 >= 2 && $hours % 10 <= 4) && ($hours % 100 < 10 || $hours % 100 >= 20)) {
-        $hoursText = "часа";
-    } else {
-        $hoursText = "часов";
-    }
-    
-    if ($minutes % 10 == 1 && $minutes % 100 != 11) {
-        $minutesText = "минута";
-    } elseif (($minutes % 10 >= 2 && $minutes % 10 <= 4) && ($minutes % 100 < 10 || $minutes % 100 >= 20)) {
-        $minutesText = "минуты";
-    } else {
-        $minutesText = "минут";
-    }
-    
-    return $hours . " " . $hoursText . " " . $minutes . " " . $minutesText;
-}
-
 // Задача 1
 function processTwoNumbers($a, $b) {
     if ($a >= 0 && $b >= 0) {
@@ -216,17 +193,6 @@ $powerExample = power(2, 8);
             margin-bottom: 8px;
         }
         
-        .time {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            padding: 20px;
-            border-radius: 15px;
-            margin: 30px 0;
-            font-size: 2em;
-            font-weight: bold;
-            color: white;
-            text-align: center;
-        }
-        
         .year {
             margin-top: 30px;
             padding-top: 20px;
@@ -292,10 +258,6 @@ $powerExample = power(2, 8);
                 <p>power(5, 3) = <?php echo power(5, 3); ?></p>
                 <p>power(10, 2) = <?php echo power(10, 2); ?></p>
             </div>
-        </div>
-        
-        <div class="time">
-            <?php echo getFormattedTime(); ?>
         </div>
         
         <div class="year">
