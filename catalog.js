@@ -1,7 +1,7 @@
 import { Catalog } from "./src/components/catalog.js"
 
 const renderPostItem = item => `
-    <a href="post.html?id=${item.id}" class="post-item">
+    <a href="posts.html?id=${item.id}" class="post-item">
         <span class="post-item__title">
             ${escapeHtml(item.title)}
         </span>

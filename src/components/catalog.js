@@ -72,16 +72,16 @@ export class Catalog {
     }
 
     loadItems () {
-        try {
-            this.#getItems({ limit: this.limit, page: this.#page })
-                .then(({ items, total }) => {
-                    this.#total = total
-                    this.renderItems(items)
-                    this.renderPagination()
-        })
-        } catch (error) {
-            console.log(error);
-        }
+        this.#getItems({ limit: this.limit, page: this.#page })
+            .then(({ items, total }) => {
+                this.#total = total
+                this.renderItems(items)
+                this.renderPagination()
+            })
+            .catch(error => {
+                console.error('Ошибка при загрузке элементов:', error);
+                this.#itemsEl.innerHTML = '<div class="error">Ошибка при загрузке постов</div>';
+            })
     }
 
     renderItems (items) {
