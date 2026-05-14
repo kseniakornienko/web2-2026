@@ -1,7 +1,9 @@
 <?php
 
+date_default_timezone_set('Asia/Yekaterinburg');
+
 $pageTitle = "Моя первая PHP страница";
-$heading = "Добро пожаловать на мой сайт!";
+$heading = "Добро пожаловать!";
 $currentYear = date("Y");
 
 
@@ -44,7 +46,7 @@ function getFormattedTime() {
         
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #e6ea66 0%, #764ba2 100%);
             min-height: 100vh;
             display: flex;
             justify-content: center;
@@ -75,15 +77,7 @@ function getFormattedTime() {
             margin: 30px 0;
             font-size: 2em;
             font-weight: bold;
-            color: #667eea;
-        }
-        
-        .year {
-            margin-top: 30px;
-            padding-top: 20px;
-            border-top: 2px solid #eee;
-            color: #888;
-            font-size: 1.2em;
+            color: #ab760b;
         }
         
         .info {
@@ -104,12 +98,7 @@ function getFormattedTime() {
         </div>
         
         <div class="info">
-            <p>Это страница сгенерирована с помощью PHP</p>
             <p>Текущая дата: <?php echo date("d.m.Y"); ?></p>
-        </div>
-        
-        <div class="year">
-            © <?php echo $currentYear; ?> Все права защищены
         </div>
     </div>
 </body>
