@@ -1,19 +1,18 @@
 <?php
 
 $pageTitle = "PHP Задачи";
-$heading = "Выполнение заданий на PHP";
 $currentYear = date("Y");
-$a = 12;
+$a = -12;
 $b = -5;
 
 // Задача 1
 function processTwoNumbers($a, $b) {
     if ($a >= 0 && $b >= 0) {
-        return "Оба положительные (≥0). Разность: " . ($a - $b);
+        return "Разность: " . ($a - $b);
     } elseif ($a < 0 && $b < 0) {
-        return "Оба отрицательные. Произведение: " . ($a * $b);
+        return "Произведение: " . ($a * $b);
     } else {
-        return "Разные знаки. Сумма: " . ($a + $b);
+        return "Сумма: " . ($a + $b);
     }
 }
 
@@ -135,7 +134,7 @@ $powerExample = power(2, 8);
         
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #667eea 0%, #eac66b 100%);
             min-height: 100vh;
             display: flex;
             justify-content: center;
@@ -152,13 +151,6 @@ $powerExample = power(2, 8);
             box-shadow: 0 20px 60px rgba(0,0,0,0.3);
         }
         
-        h1 {
-            color: #333;
-            margin-bottom: 30px;
-            font-size: 2.5em;
-            text-align: center;
-        }
-        
         h2 {
             color: #667eea;
             font-size: 1.5em;
@@ -171,7 +163,7 @@ $powerExample = power(2, 8);
             padding: 20px;
             border-radius: 15px;
             margin-bottom: 20px;
-            border-left: 4px solid #667eea;
+            border-left: 4px solid #eac66b;
         }
         
         .section p {
@@ -194,75 +186,56 @@ $powerExample = power(2, 8);
             margin-bottom: 8px;
         }
         
-        .year {
-            margin-top: 30px;
-            padding-top: 20px;
-            border-top: 2px solid #eee;
-            color: #888;
-            font-size: 1.2em;
-            text-align: center;
-        }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1><?php echo $heading; ?></h1>
-        
         <div class="section">
-            <h2>Задача 1: Условия для двух чисел</h2>
+            <h2>Задача 1</h2>
             <p><strong>$a = <?php echo $originalA; ?>, $b = <?php echo $originalB; ?></strong></p>
             <div class="result">
                 <?php echo $task1Result; ?>
             </div>
         </div>
-        
         <div class="section">
-            <h2>Задача 2: Switch для вывода чисел</h2>
+            <h2>Задача 2</h2>
             <p><strong>Переменная $a = <?php echo $a; ?>, числа от $a до 15:</strong></p>
             <div class="result">
                 <?php echo implode(", ", $numbersSequence); ?>
             </div>
         </div>
-        
         <div class="section">
-            <h2>Задача 3: Четыре арифметические операции</h2>
+            <h2>Задача 3</h2>
             <div class="result">
                 <?php foreach ($task3Examples as $example): ?>
                     <p><?php echo $example; ?></p>
                 <?php endforeach; ?>
             </div>
         </div>
-        
         <div class="section">
-            <h2>Задача 4: Функция mathOperation</h2>
+            <h2>Задача 4</h2>
             <div class="result">
                 <?php foreach ($task4Examples as $example): ?>
                     <p><?php echo $example; ?></p>
                 <?php endforeach; ?>
             </div>
         </div>
-        
         <div class="section">
-            <h2>Задача 5: Текущий год (3 способа)</h2>
+            <h2>Задача 5</h2>
             <div class="result">
                 <p><strong>Способ 1 (date):</strong> <?php echo $year1; ?></p>
                 <p><strong>Способ 2 (strtotime + date):</strong> <?php echo date("Y", strtotime("now")); ?></p>
                 <p><strong>Способ 3 (getdate):</strong> <?php echo $year3; ?></p>
             </div>
         </div>
-        
         <div class="section">
-            <h2>Задача 6: Рекурсивное возведение в степень</h2>
+            <h2>Задача 6</h2>
             <p><strong>power(2, 8) = <?php echo $powerExample; ?></strong></p>
             <div class="result">
                 <p>power(3, 4) = <?php echo power(3, 4); ?></p>
                 <p>power(5, 3) = <?php echo power(5, 3); ?></p>
                 <p>power(10, 2) = <?php echo power(10, 2); ?></p>
             </div>
-        </div>
-        
-        <div class="year">
-            © <?php echo $currentYear; ?> Все права защищены
         </div>
     </div>
 </body>
