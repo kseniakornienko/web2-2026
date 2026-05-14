@@ -1,19 +1,15 @@
--- schema.sql - Database schema for product catalog
-
 CREATE DATABASE IF NOT EXISTS web2_catalog;
 USE web2_catalog;
 
--- Products table
 CREATE TABLE products (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
-    image VARCHAR(255) NOT NULL, -- Path to image file
+    image VARCHAR(255) NOT NULL,
     price DECIMAL(10,2) NOT NULL,
     description TEXT NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- Reviews table
 CREATE TABLE reviews (
     id INT AUTO_INCREMENT PRIMARY KEY,
     product_id INT NOT NULL,
@@ -24,7 +20,6 @@ CREATE TABLE reviews (
     FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE
 );
 
--- Insert sample data
 INSERT INTO products (name, image, price, description) VALUES
 ('Laptop Dell XPS 13', 'products/laptop.jpg', 1299.99, 'Powerful ultrabook with Intel Core i7 processor, 16GB RAM, 512GB SSD.'),
 ('Wireless Headphones Sony WH-1000XM4', 'products/headphones.jpg', 349.99, 'Industry-leading noise canceling wireless headphones with 30-hour battery life.'),
