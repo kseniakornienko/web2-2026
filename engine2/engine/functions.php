@@ -22,6 +22,10 @@ function renderTemplate($page, $params = []) {
     return ob_get_clean();
 }
 
+function isGdExtensionEnabled() {
+    return function_exists('gd_info') && !empty(gd_info());
+}
+
 // Получить список изображений из папки
 function getGalleryImages($directory) {
     $path = realpath($directory);
@@ -47,15 +51,8 @@ function getGalleryImages($directory) {
 }
 
 // Построить HTML галереи
-function buildGallery($directory, $thumbnail_width = 150) {
+function buildGallery($directory, $base_url, $thumbnail_width = 150) {
     $images = getGalleryImages($directory);
-    
-    // Получить базовый путь от DOCUMENT_ROOT
-    $doc_root = $_SERVER['DOCUMENT_ROOT'];
-    $base_url = str_replace($doc_root, '', $directory);
-    if (strpos($base_url, '/') !== 0) {
-        $base_url = '/' . $base_url;
-    }
     
     $html = '<div class="gallery">';
     foreach ($images as $image) {
@@ -65,13 +62,13 @@ function buildGallery($directory, $thumbnail_width = 150) {
         }
         
         $thumbnail_file = 'thumb_' . $image;
-        $thumbnail_exists = file_exists($directory . '/' . $thumbnail_file);
+        $thumbnail_exists = file_exists($directory . $thumbnail_file);
         
         // Использовать миниатюру если она существует, иначе оригинал
         $display_image = $thumbnail_exists ? $thumbnail_file : $image;
         
-        $html .= '<a href="' . htmlspecialchars($base_url . '/' . $image) . '" target="_blank" class="gallery-item">';
-        $html .= '<img src="' . htmlspecialchars($base_url . '/' . $display_image) . '" width="' . $thumbnail_width . '" alt="' . htmlspecialchars($image) . '">';
+        $html .= '<a href="' . htmlspecialchars($base_url . $image) . '" target="_blank" class="gallery-item">';
+        $html .= '<img src="' . htmlspecialchars($base_url . $display_image) . '" width="' . $thumbnail_width . '" alt="' . htmlspecialchars($image) . '">';
         $html .= '</a>';
     }
     $html .= '</div>';
@@ -127,6 +124,11 @@ function uploadImage($file_input_name, $destination_dir, $max_size = 5242880, $m
         return ['success' => false, 'error' => 'Невалидное изображение'];
     }
     
+    if (!isGdExtensionEnabled()) {
+        unlink($filepath);
+        return ['success' => false, 'error' => 'Расширение GD не включено. Включите php_gd2 в php.ini и перезапустите Apache.'];
+    }
+
     $width = $image_info[0];
     $height = $image_info[1];
     
@@ -167,6 +169,10 @@ function resizeImage($source_path, $dest_path, $max_width, $max_height, $image_t
         $width = round($height * $ratio);
     }
     
+    if (!isGdExtensionEnabled()) {
+        return false;
+    }
+
     // Создать новое изображение
     $new_image = imagecreatetruecolor($width, $height);
     
@@ -244,6 +250,10 @@ function createThumbnail($source_path, $dest_path, $thumb_width, $thumb_height, 
         $crop_y = round(($height - $crop_height) / 2);
     }
     
+    if (!isGdExtensionEnabled()) {
+        return false;
+    }
+
     // Создать новое изображение для миниатюры
     $thumb = imagecreatetruecolor($thumb_width, $thumb_height);
     

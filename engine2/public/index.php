@@ -53,14 +53,13 @@ switch ($page) {
         
         // Обработка загрузки файла
         if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['upload_gallery'])) {
-            $gallery_dir = $_SERVER['DOCUMENT_ROOT'] . '/gallery';
-            $result = uploadImage('gallery_image', $gallery_dir, 5242880, 1200, 1200);
+            $result = uploadImage('gallery_image', GALLERY_DIR, 5242880, 1200, 1200);
             
             if ($result['success']) {
                 $params['success'] = true;
                 _log('Загружено изображение: ' . $result['filename'], 'gallery');
                 // Перезагрузить страницу чтобы показать новое изображение
-                header("Location: ?page=gallery");
+                header("Location: " . BASE_URL . "index.php?page=gallery");
                 die();
             } else {
                 $params['error'] = $result['error'];
@@ -68,8 +67,7 @@ switch ($page) {
         }
         
         // Построить галерею
-        $gallery_dir = $_SERVER['DOCUMENT_ROOT'] . '/gallery';
-        $params['gallery_html'] = buildGallery($gallery_dir, 150);
+        $params['gallery_html'] = buildGallery(GALLERY_DIR, GALLERY_URL, 150);
         break;
 
     case 'apicatalog':
