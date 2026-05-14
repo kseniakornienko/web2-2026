@@ -6,9 +6,9 @@ function getNumberDescriptions(): string {
     $output = '';
     do {
         if ($i === 0) {
-            $output .= "0 – это ноль.<br>\n";
+            $output .= "0 – это ноль.<br>";
         } else {
-            $output .= $i . ' – ' . ($i % 2 === 0 ? 'чётное число.' : 'нечётное число.') . '<br>\n';
+            $output .= $i . ' – ' . ($i % 2 === 0 ? 'чётное число.' : 'нечётное число.') . '<br>';
         }
         $i++;
     } while ($i <= 10);
