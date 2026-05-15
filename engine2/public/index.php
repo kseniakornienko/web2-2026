@@ -1,16 +1,9 @@
 <?php
 include "../config/config.php";
 
-// Логирование запроса
 $log_result = logPageRequest();
-// Для отладки - временно
-if (isset($_GET['debug'])) {
-    echo "<!-- Log result: " . ($log_result ? "SUCCESS" : "FAILED") . " -->";
-    $log_file = $_SERVER['DOCUMENT_ROOT'] . "/_log/log.txt";
-    if (file_exists($log_file)) {
-        echo "<!-- Log file exists, size: " . filesize($log_file) . " bytes -->";
-    }
-}
+
+handleFeedbackAjax();
 
 $page = 'index';
 if (isset($_GET['page'])) {
@@ -24,12 +17,6 @@ switch ($page) {
         break;
 
     case 'bux':
-        /* if (!empty($_FILES)) {
-            upload();
-            header(/?page=bux);
-        die();
-        }*/
-
         $params['title'] = 'Бухи';
         $params['message'] = 'Файл загружен';
         $params['files'] = getFiles();
@@ -37,8 +24,40 @@ switch ($page) {
         break;
 
     case 'catalog':
-        $params['title'] = 'Каталог';
-        $params['catalog'] = getCatalog();
+        $params['title'] = 'Каталог товаров';
+        $params['products'] = getAllProducts();
+        break;
+        
+    case 'product':
+        $product_id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
+        $product = getProductById($product_id);
+        
+        if (!$product) {
+            echo "404 - Товар не найден";
+            die();
+        }
+        
+        $params['title'] = $product['name'];
+        $params['product'] = $product;
+        $params['reviews'] = getReviewsByProductId($product_id);
+        $params['rating_info'] = getAverageRating($product_id);
+        
+        if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_review'])) {
+            $result = doFeedbackAction('create', [
+                'product_id' => $product_id,
+                'author' => $_POST['author'] ?? '',
+                'rating' => $_POST['rating'] ?? 0,
+                'comment' => $_POST['comment'] ?? ''
+            ]);
+            
+            if ($result['success']) {
+                $params['review_success'] = $result['message'];
+                $params['reviews'] = getReviewsByProductId($product_id);
+                $params['rating_info'] = getAverageRating($product_id);
+            } else {
+                $params['review_error'] = $result['message'];
+            }
+        }
         break;
 
     case 'about':
@@ -51,14 +70,12 @@ switch ($page) {
         $params['error'] = '';
         $params['success'] = false;
         
-        // Обработка загрузки файла
         if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['upload_gallery'])) {
             $result = uploadImage('gallery_image', GALLERY_DIR, 5242880, 1200, 1200);
             
             if ($result['success']) {
                 $params['success'] = true;
                 _log('Загружено изображение: ' . $result['filename'], 'gallery');
-                // Перезагрузить страницу чтобы показать новое изображение
                 header("Location: " . BASE_URL . "index.php?page=gallery");
                 die();
             } else {
@@ -66,7 +83,6 @@ switch ($page) {
             }
         }
         
-        // Построить галерею
         $params['gallery_html'] = buildGallery(GALLERY_DIR, GALLERY_URL, 150);
         break;
 
@@ -74,11 +90,14 @@ switch ($page) {
         echo json_encode(getCatalog(), JSON_UNESCAPED_UNICODE);
         die();
 
+    case 'admin_reviews':
+        $params['title'] = 'Управление отзывами';
+        break;
+
     default:
         echo "404";
         die();
 }
 
 echo render($page, $params);
-
-
+?>

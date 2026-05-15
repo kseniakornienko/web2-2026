@@ -1,0 +1,10 @@
+15.05.2026 12:08:18 - GET /web2-2026/engine2/public/index.php?page=catalog - IP: ::1
+15.05.2026 12:08:30 - GET /web2-2026/engine2/public/index.php?page=catalog - IP: ::1
+15.05.2026 12:08:33 - GET /web2-2026/engine2/public/index.php?page=admin_reviews - IP: ::1
+15.05.2026 12:08:41 - GET /web2-2026/engine2/public/index.php?page=catalog - IP: ::1
+15.05.2026 12:08:45 - GET /web2-2026/engine2/public/index.php?page=product&id=1 - IP: ::1
+15.05.2026 12:08:47 - GET /web2-2026/engine2/public/index.php?page=catalog - IP: ::1
+15.05.2026 12:08:49 - GET /web2-2026/engine2/public/index.php?page=product&id=5 - IP: ::1
+15.05.2026 12:08:58 - POST /web2-2026/engine2/public/index.php?page=product&id=5 - IP: ::1
+15.05.2026 12:09:02 - GET /web2-2026/engine2/public/index.php?page=admin_reviews - IP: ::1
+15.05.2026 12:09:07 - POST /web2-2026/engine2/public/index.php?page=admin_reviews - IP: ::1
